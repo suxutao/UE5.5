@@ -1,0 +1,73 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#include "/Plugin/Optimus/Private/DataInterfaceSkeletonCommon.ush"
+
+uint {DataInterfaceName}_NumVertices;
+uint {DataInterfaceName}_InputStreamStart;
+uint {DataInterfaceName}_NumBoneInfluences;
+uint {DataInterfaceName}_InputWeightStart;
+uint {DataInterfaceName}_InputWeightStride;
+uint {DataInterfaceName}_InputWeightIndexSize;
+Buffer<float4> {DataInterfaceName}_BoneMatrices;
+Buffer<uint> {DataInterfaceName}_InputWeightStream;
+Buffer<uint> {DataInterfaceName}_InputWeightLookupStream;
+
+uint ReadNumVertices_{DataInterfaceName}()
+{
+	return {DataInterfaceName}_NumVertices;
+}
+
+uint ReadNumBones_{DataInterfaceName}(uint VertexIndex)
+{
+	return ReadNumBones(
+		{DataInterfaceName}_InputStreamStart,
+		{DataInterfaceName}_InputWeightLookupStream,
+		{DataInterfaceName}_NumBoneInfluences,
+		VertexIndex
+		);
+}
+
+float3x4 ReadBoneMatrix_{DataInterfaceName}(uint VertexIndex, uint BoneIndex)
+{
+	return ReadBoneMatrix(
+		{DataInterfaceName}_InputStreamStart,
+		{DataInterfaceName}_InputWeightLookupStream,
+		{DataInterfaceName}_InputWeightIndexSize,
+		{DataInterfaceName}_InputWeightStream,
+		{DataInterfaceName}_InputWeightStart,
+		{DataInterfaceName}_InputWeightStride,
+		{DataInterfaceName}_BoneMatrices,
+		VertexIndex,
+		BoneIndex
+		);
+}
+
+float ReadBoneWeight_{DataInterfaceName}(uint VertexIndex, uint BoneIndex)
+{
+	return ReadBoneWeight(
+		{DataInterfaceName}_InputStreamStart,
+		{DataInterfaceName}_InputWeightLookupStream,
+		{DataInterfaceName}_InputWeightIndexSize,
+		{DataInterfaceName}_InputWeightStream,
+		{DataInterfaceName}_InputWeightStart,
+		{DataInterfaceName}_InputWeightStride,
+		{DataInterfaceName}_NumBoneInfluences,	
+		VertexIndex,
+		BoneIndex
+		);
+}
+
+float3x4 ReadWeightedBoneMatrix_{DataInterfaceName}(uint VertexIndex)
+{
+	return ReadWeightedBoneMatrix(
+		{DataInterfaceName}_InputStreamStart,
+		{DataInterfaceName}_InputWeightLookupStream,
+		{DataInterfaceName}_InputWeightIndexSize,
+		{DataInterfaceName}_InputWeightStream,
+		{DataInterfaceName}_InputWeightStart,
+		{DataInterfaceName}_InputWeightStride,
+		{DataInterfaceName}_NumBoneInfluences,
+		{DataInterfaceName}_BoneMatrices,
+		VertexIndex
+		);
+}
